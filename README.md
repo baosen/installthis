@@ -10,7 +10,7 @@ Execute
 ./install.sh
 ```
 
-to install `installthis` into `usr/local/bin`.
+to install `installthis` into `/usr/local/bin`.
 
 ## Usage
 
