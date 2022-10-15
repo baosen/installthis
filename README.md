@@ -2,7 +2,7 @@
 
 Install C and C++-projects without fuzz.
 
-## Install
+## Installation
 
 Execute
 
