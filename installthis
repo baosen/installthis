@@ -7,6 +7,22 @@ if [ $? != 0 ]; then
   exit 1
 fi
 
+# Build Makefile-projects.
+if test -f "Makefile" || test -f "makefile"; then
+  # Configure project if needed.
+  if test -f "configure"; then
+    ./configure
+  fi
+
+  # Build Makefile with all cores.
+  make -j$(nproc)
+
+  # Install it.
+  sudo make install
+
+  exit 0
+fi
+
 # Create a temporarily build-directory to put the built files in made by CMake.
 BUILD_DIR=/tmp/build-$(openssl rand -base64 12)
 mkdir -p $BUILD_DIR
