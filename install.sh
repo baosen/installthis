@@ -1,1 +1,1 @@
-install ./installthis /usr/local/bin/
+sudo install ./installthis /usr/local/bin/
