@@ -21,6 +21,10 @@ if test -f "meson.build"; then
   fi
 
   meson $BUILD_DIR
+  cd $BUILD_DIR
+  ninja
+
+  sudo ninja install
   exit 0
 fi
 
