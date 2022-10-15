@@ -3,7 +3,7 @@
 # Check if openssl is installed used to generate a random name for the build-directory.
 which openssl > /dev/null
 if [ $? != 0 ]; then
-  echo "openssl is not installed"
+  echo "Error: openssl is not installed."
   exit 1
 fi
 
@@ -16,7 +16,7 @@ if test -f "meson.build"; then
   # Check if meson is installed.
   which meson > /dev/null
   if [ $? != 0 ]; then
-    echo "meson is not installed"
+    echo "Error: meson is not installed."
     exit 1
   fi
 
@@ -29,6 +29,8 @@ if test -f "meson.build"; then
 
   # Install it.
   sudo ninja install
+
+  exit 0
 fi
 
 # Build and install cmake-projects.
@@ -36,7 +38,7 @@ if test -f "CMakeLists.txt"; then
   # Check if cmake is installed.
   which cmake > /dev/null
   if [ $? != 0 ]; then
-    echo "cmake is not installed"
+    echo "Error: cmake is not installed"
     exit 1
   fi
   
@@ -58,7 +60,7 @@ if test -f "CMakeLists.txt"; then
     # Check if make is installed.
     which make > /dev/null
     if [ $? != 0 ]; then
-      echo "make is not installed"
+      echo "Error: make is not installed"
       exit 1
     fi
   
@@ -72,4 +74,11 @@ if test -f "CMakeLists.txt"; then
     # Install it.
     sudo make install
   fi
+  exit 0
 fi
+
+echo "Error: No C or C++ project found."
+echo ""
+echo "Usage:"
+echo "  cd into a directory containing CMakeLists.txt or meson.build and execute installthis."
+exit 1
