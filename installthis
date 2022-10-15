@@ -1,0 +1,53 @@
+#!/usr/bin/bash
+
+# Check if cmake is installed.
+which cmake > /dev/null
+if [ $? != 0 ]; then
+  echo "cmake is not installed"
+  exit 1
+fi
+
+# Check if openssl is installed used to generate a random name for the build-directory.
+which openssl > /dev/null
+if [ $? != 0 ]; then
+  echo "openssl is not installed"
+  exit 1
+fi
+
+# Create a temporarily build-directory to put the built files in made by CMake.
+BUILD_DIR=/tmp/cmake-build-$(openssl rand -base64 12)
+mkdir -p $BUILD_DIR
+
+CONFIG=Release
+
+# Check if ninja is installed.
+which ninja > /dev/null
+if [ $? == 0 ]; then
+  # Generate project using ninja.
+  cmake -G Ninja -DCMAKE_BUILD_TYPE=$CONFIG -B $BUILD_DIR -S $PWD
+
+  # Build source code using ninja.
+  cd $BUILD_DIR
+  ninja
+
+  # Install it.
+  sudo ninja install
+else # fallback to make.
+  # Check if make is installed.
+  which make > /dev/null
+  if [ $? != 0 ]; then
+    echo "make is not installed"
+    exit 1
+  fi
+
+  # Generate project using default, which is Makefile.
+  cmake -G 'Unix Makefiles' -DCMAKE_BUILD_TYPE=$CONFIG -B $BUILD_DIR -S $PWD
+
+  # Build source code using all CPU cores on this computer.
+  cd $BUILD_DIR
+  make -j$(nproc)
+
+  # Install it.
+  sudo make install
+fi
+exit 0
