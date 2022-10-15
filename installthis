@@ -25,7 +25,6 @@ if test -f "meson.build"; then
   ninja
 
   sudo ninja install
-  exit 0
 fi
 
 # Build and install cmake-projects.
@@ -69,5 +68,4 @@ if test -f "CMakeLists.txt"; then
     # Install it.
     sudo make install
   fi
-  exit 0
 fi
