@@ -1,11 +1,8 @@
 #!/usr/bin/bash
 
-# Check if openssl is installed used to generate a random name for the build-directory.
-which openssl > /dev/null
-if [ $? != 0 ]; then
-  echo "Error: openssl is not installed."
-  exit 1
-fi
+#
+# This code is for projects that build in-directory.
+#
 
 # Build Makefile-projects.
 if test -f "Makefile" || test -f "makefile"; then
@@ -21,6 +18,17 @@ if test -f "Makefile" || test -f "makefile"; then
   sudo make install
 
   exit 0
+fi
+
+#
+# This code is for projects that build out-of-directory.
+#
+
+# Check if openssl is installed used to generate a random name for the build-directory.
+which openssl > /dev/null
+if [ $? != 0 ]; then
+  echo "Error: openssl is not installed."
+  exit 1
 fi
 
 # Create a temporarily build-directory to put the built files in made by CMake.
@@ -93,6 +101,7 @@ if test -f "CMakeLists.txt"; then
   exit 0
 fi
 
+# Print error.
 echo "Error: No C or C++ project found."
 echo ""
 echo "Usage:"
