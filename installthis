@@ -20,10 +20,14 @@ if test -f "meson.build"; then
     exit 1
   fi
 
+  # Generate meson project files.
   meson $BUILD_DIR
+
+  # Build it.
   cd $BUILD_DIR
   ninja
 
+  # Install it.
   sudo ninja install
 fi
 
@@ -61,7 +65,7 @@ if test -f "CMakeLists.txt"; then
     # Generate project using default, which is Makefile.
     cmake -G 'Unix Makefiles' -DCMAKE_BUILD_TYPE=$CONFIG -B $BUILD_DIR -S $PWD
   
-    # Build source code using all CPU cores on this computer.
+    # Build source code with make using all CPU cores on this computer.
     cd $BUILD_DIR
     make -j$(nproc)
   
