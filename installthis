@@ -1,4 +1,5 @@
 #!/usr/bin/bash
+set -e
 
 #
 # This code is for projects that build in-directory.
